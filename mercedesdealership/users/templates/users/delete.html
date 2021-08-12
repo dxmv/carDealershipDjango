@@ -1,0 +1,14 @@
+{% extends "dealership/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div style="background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('https://www.mbcollierville.com/wp-content/themes/DealerInspireDealerTheme/images/video-fallback-background.jpg');background-repeat: no-repeat;background-position:center;background-size:cover;">
+        <div class="container user-page">
+            <form method="post" class="my-4 py-3 px-5" style="color:white;">
+                {% csrf_token %}
+                <h3 class="mb-2" style="font-size:30px;">Are you sure you want to delete account "{{user.username}}"?</h3>
+                <button type="submit" class="my-3 my-submit"><span style="z-index:3;position:relative;">Yes</span></button>
+                <a class="btn my-submit" href="/account/{{user.id}}/"><span style="z-index:3;position:relative;">NO</span></a>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

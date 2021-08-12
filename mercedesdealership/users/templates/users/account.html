@@ -1,0 +1,158 @@
+{% extends "dealership/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div style="background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('https://www.mbcollierville.com/wp-content/themes/DealerInspireDealerTheme/images/video-fallback-background.jpg');background-repeat: no-repeat;background-position:center;background-size:cover;">
+        <div class="container user-page" style="color:white;">
+            {% if request.user == user %}
+                <div class="border-bottom d-flex justify-content-between align-items-center">
+                    <h1 style="color:goldenrod;font-size:50px;">{{user.username}} - {{user.first_name}} {{user.last_name}} </h1>
+                    <div class="d-flex justify-content-between" style="color:white;text-decoration:none;width:3%;">
+                        <a href="edit/" style="color:inherit;"><i class="fas fa-pencil-alt"></i></a>
+                        <a href="delete/" style="color:red;"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="user-info my-4 mx-auto" style="width:50%;display:grid;grid-template-columns:repeat(2,1fr)">
+                    <h5><i class="far fa-calendar-alt"></i> {{user.date_joined}}</h5>
+                    <h5><i class="far fa-envelope"></i> {{user.email}}</h5>
+                    <h5><i class="fas fa-phone-alt"></i> {{user.profile.phone_number}}</h5>
+                    <h5><i class="fas fa-city"></i> {{user.profile.city}}</h5>
+                </div>
+                <div class="border-bottom ">
+                    <h3 style="color:goldenrod;">Posts ({{cars.count}}) </h3>
+                </div>
+                <div class="car-page-list">
+                <ul  class="list-group" style="list-style:none;padding:0;">
+                    {% if cars.count == 0 %}
+                        <h3>No posts</h3>
+                    {% else %}
+                        {% for car in cars %}
+                          <li class="list-group-item car-list-item border-bottom mx-auto">
+                              <img src={{car.image.url}} class="car-list-image">
+                              <div>
+                                <h3 style="margin-top:10px;color:black;margin-bottom:20px;">{{car.name}}</h3>
+                                <div class="d-flex">
+                                    <div style="width:60%;">
+                                        <p>{{car.description|truncatewords:50}}</p>
+                                    </div>
+                                    <div style="width:40%">
+                                      <ul class="list-group" style="display:grid;grid-template-columns:repeat(2,1fr)">
+                                          <li class="list-group-item">
+                                              <i class="far fa-calendar-alt"></i> {{car.year}}
+                                          </li>
+                                          <li class="list-group-item">
+                                              <i class="fas fa-city"></i> {{car.city}}
+                                          </li>
+                                          <li class="list-group-item">
+                                              <i class="fas fa-cogs"></i> {{car.get_transmision_display}}
+                                          </li>
+                                          <li class="list-group-item">
+                                              <i class="fas fa-gas-pump"></i> {{car.get_fuel_type_display}}
+                                          </li>
+                                      </ul>
+                                    </div>
+                                </div>
+                                <a class="btn btn-buy-car" href="/cars/{{car.id}}/" style="width:15%;float:right"><span style="position:relative;z-index:2;">{{car.price}} $</span></a>
+                              </div>
+                          </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+              </div>
+              <div class="border-bottom ">
+                    <h3 style="color:goldenrod;">Favourites ({{fav.count}}) </h3>
+                </div>
+                <div class="car-page-list mx-auto">
+                <ul  class="list-group" style="list-style:none;padding:0;">
+                    {% if fav.count == 0 %}
+                        <h3>No favourites</h3>
+                    {% else %}
+                        {% for car in fav %}
+                          <li class="list-group-item car-list-item border-bottom mx-auto">
+                              <img src={{car.image.url}} class="car-list-image">
+                              <div>
+                                <h3 style="margin-top:10px;color:black;margin-bottom:20px;">{{car.name}}</h3>
+                                <div class="d-flex">
+                                    <div style="width:60%;">
+                                        <p>{{car.description|truncatewords:50}}</p>
+                                    </div>
+                                    <div style="width:40%">
+                                      <ul class="list-group" style="display:grid;grid-template-columns:repeat(2,1fr)">
+                                          <li class="list-group-item">
+                                              <i class="far fa-calendar-alt"></i> {{car.year}}
+                                          </li>
+                                          <li class="list-group-item">
+                                              <i class="fas fa-city"></i> {{car.city}}
+                                          </li>
+                                          <li class="list-group-item">
+                                              <i class="fas fa-cogs"></i> {{car.get_transmision_display}}
+                                          </li>
+                                          <li class="list-group-item">
+                                              <i class="fas fa-gas-pump"></i> {{car.get_fuel_type_display}}
+                                          </li>
+                                      </ul>
+                                    </div>
+                                </div>
+                                <a class="btn btn-buy-car" href="/cars/{{car.id}}/" style="width:15%;float:right"><span style="position:relative;z-index:2;">{{car.price}} $</span></a>
+                              </div>
+                          </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+              </div>
+            </div>
+            </div>
+            {% else %}
+                <div class="border-bottom">
+                    <h1 style="color:goldenrod;font-size:50px;">{{user.username}} - {{user.first_name}} {{user.last_name}} </h1>
+
+                </div>
+                <h5>{{user.date_joined}}</h5>
+                <h5>{{user.email}}</h5>
+                <h5>{{user.profile.phone_number}}</h5>
+                <h5>{{user.profile.city}}</h5>
+                <div class="border-bottom mt-3">
+                    <h3 style="color:goldenrod;">Posts ({{cars.count}}) </h3>
+                </div>
+                <div class="car-page-list mx-auto">
+                <ul  class="list-group" style="list-style:none;padding:0;">
+                    {% if cars.count == 0 %}
+                        <h3>No posts</h3>
+                    {% else %}
+                        {% for car in cars %}
+                          <li class="list-group-item car-list-item border-bottom mx-auto">
+                              <img src={{car.image.url}} class="car-list-image">
+                              <div>
+                                <h3 style="margin-top:10px;color:black;margin-bottom:20px;">{{car.name}}</h3>
+                                <div class="d-flex">
+                                    <div style="width:60%;">
+                                        <p>{{car.description|truncatewords:50}}</p>
+                                    </div>
+                                    <div style="width:40%">
+                                      <ul class="list-group" style="display:grid;grid-template-columns:repeat(2,1fr)">
+                                          <li class="list-group-item">
+                                              <i class="far fa-calendar-alt"></i> {{car.year}}
+                                          </li>
+                                          <li class="list-group-item">
+                                              <i class="fas fa-city"></i> {{car.city}}
+                                          </li>
+                                          <li class="list-group-item">
+                                              <i class="fas fa-cogs"></i> {{car.get_transmision_display}}
+                                          </li>
+                                          <li class="list-group-item">
+                                              <i class="fas fa-gas-pump"></i> {{car.get_fuel_type_display}}
+                                          </li>
+                                      </ul>
+                                    </div>
+                                </div>
+                                <a class="btn btn-buy-car" href="/cars/{{car.id}}/" style="width:15%;float:right"><span style="position:relative;z-index:2;">{{car.price}} $</span></a>
+                              </div>
+                          </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+              </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

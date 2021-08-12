@@ -1,0 +1,65 @@
+{% extends "dealership/base.html" %}
+{% block content %}
+    <div id="home-img">
+        <div class="home-header">
+            <h1 style="margin-bottom:40px;font-size:60px;">Welcome to YOUR Mercedes Dealership</h1>
+            <p>We provide a service that connects customers from around the world, and helps them find and buy their dream Mercedes car.<br>
+            On this website you can find all kinds of Mercedes from Coupes to Vans. People mistake us for a dealership but we are only providing you a platform to sell your car or buy a new one.<br>
+            There is a wide range of sellers and buyers from all over Europe. We are not responsible if you get scammed, do everything here at your own risk!<br><br>
+            For all the cars enthusiast there's also a news page. You can see the latest news regarding Mercedes.<br> If you wish to join our team you contact us by clicking the "CONTACT US" button. Thank you.<br></p>
+            <a class="btn contact" style="margin-top:15px;"><span style="  position: relative;z-index: 2;">Contact Us</span></a>
+        </div>
+        <div class="about-us">
+            <h1 style="margin-bottom:40px;font-size:60px;" >About us</h1>
+            <p style="font-size:20px;">
+                We are a small coding team from Serbia. We specialize in web apps, web design, including front-end and back-end.<br>
+                Our prices range from 100$ to 1000$ you can always contact us by clicking the button above. If you like our website make sure to share it with your friends.<br>
+            </p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="latest-cars">
+            <h1>Latest Cars</h1>
+            <p>Here you can see the latest car posted on our site by other users.</p>
+            <div class="cars">
+                <ul style="list-style:none;">
+                {% for car in cars %}
+                    <li class="car-card">
+                        <img src={{car.image.url}} class="car-image">
+                        <h5 style="margin-top:10px;">{{car.name}}</h5>
+                        <ul class="list-group">
+                                <li class="list-group-item">
+                                    <i class="far fa-calendar-alt"></i> {{car.year}}
+                            </li>
+                            <li class="list-group-item">
+                                  <i class="fas fa-city"></i> {{car.city}}
+                              </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-cogs"></i> {{car.get_transmision_display}}
+                                </li>
+                                <li class="list-group-item">
+                                    <i class="fas fa-gas-pump"></i> {{car.get_fuel_type_display}}
+                                </li>
+                            <a class="btn btn-buy-car"><span style="position:relative;z-index:2;">{{car.price}} $</span></a>
+                        </ul>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            <p style="text-align:center;">If you want to see more cars click the "MORE" button.</p>
+            <div class="d-flex justify-content-center">
+                <a class="btn my-submit" style="color:black;border:3px solid black;" href="/cars/"><span style="position: relative;z-index: 2;" >MORE</span></a>
+            </div>
+
+        </div>
+        <footer class="home-footer">
+            <h1 style="text-transform:uppercase;font-size:60px;">Got any more questions?</h1>
+            <p style="text-transform:uppercase;font-size:1.5rem;">Feel free to ask them</p>
+            <div class="d-flex justify-content-around" style="width:100%;font-size:1.5rem;margin-top:30px;">
+                <p><i class="fas fa-phone-alt"></i> +381 61 6655 898</p>
+                <p><i class="far fa-envelope"></i> smercedes@gmail.com</p>
+            </div>
+        </footer>
+        <div>asdasd</div>
+    </div>
+{% endblock content %}

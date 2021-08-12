@@ -1,0 +1,56 @@
+{% extends "dealership/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container-fluid cars-page" style="color:white;padding:20px 100px;min-height:100vh;">
+      <div class="row">
+        <div class="col-2">
+            <form method="get" class="filter">
+                <h2 style="color:goldenrod;">Filter <i class="fas fa-search" style="font-size:1.5rem;vertical-align:top;margin-top:10px;"></i></h2>
+                {{ filter.form|crispy }}
+                <button type="submit"><span style="z-index:3;">Search</span></button>
+            </form>
+        </div>
+        <div class="result col-10 d-flex flex-column">
+          <h2>Results: {{cars.count}}</h2>
+          <div class="car-page-list">
+            <ul  class="list-group" style="list-style:none;padding:0;">
+                {% if cars.count == 0 %}
+                    <h1>No cars match your requierments</h1>
+                {% else %}
+                    {% for car in cars %}
+                      <li class="list-group-item car-list-item border-bottom">
+                          <img src={{car.image.url}} class="car-list-image">
+                          <div>
+                            <h3 style="margin-top:10px;color:black;margin-bottom:20px;">{{car.name}}</h3>
+                            <div class="d-flex">
+                                <div style="width:60%;">
+                                    <p>{{car.description|truncatewords:50}}</p>
+                                </div>
+                                <div style="width:40%">
+                                  <ul class="list-group" style="display:grid;grid-template-columns:repeat(2,1fr)">
+                                      <li class="list-group-item">
+                                          <i class="far fa-calendar-alt"></i> {{car.year}}
+                                      </li>
+                                      <li class="list-group-item">
+                                          <i class="fas fa-city"></i> {{car.city}}
+                                      </li>
+                                      <li class="list-group-item">
+                                          <i class="fas fa-cogs"></i> {{car.get_transmision_display}}
+                                      </li>
+                                      <li class="list-group-item">
+                                          <i class="fas fa-gas-pump"></i> {{car.get_fuel_type_display}}
+                                      </li>
+                                  </ul>
+                                </div>
+                            </div>
+                            <a class="btn btn-buy-car" href="{{car.id}}/" style="width:15%;float:right"><span style="position:relative;z-index:2;">{{car.price}} $</span></a>
+                          </div>
+                      </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends "dealership/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="py-4" style="background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('https://images.hdqwalls.com/wallpapers/mercedes-benz-amg-group.jpg');background-repeat: no-repeat;background-position:center;background-size:cover; min-height:100vh">
+        <div class="container py-3 px-4" style="background-color:white;border:7px solid goldenrod;">
+            <div class="d-flex justify-content-between">
+                <h1>News</h1>
+                {% if request.user.is_staff %}
+                    <a href="add/" style="text-decoration:none;color:black;"><h2>+</h2></a>
+                {% endif %}
+            </div>
+            <ul style="list-style:none;padding:0;">
+                {% for post in page_obj %}
+                    <li class="border-bottom d-flex py-3">
+                        <img src="{{post.image.url}}" style="border:3px solid black;width:300px;height:auto;">
+                        <div class="px-3" style="width:100%;">
+                            <div class="d-flex justify-content-between py-0" style="width:100%;padding:0;margin:0;">
+                                <p style="padding:0;margin:0;">{{post.author.first_name}} {{post.author.last_name}}</p>
+                                <p>{{post.date}}</p>
+                            </div>
+                            <div class="border-top" style="width:100%">
+                                <h2 style="padding:0;margin:0;" ><a href="{{post.id}}/" style="text-decoration:none;color:black;">{{post.title}}</a></h2>
+                                <p>{{post.post|truncatewords:20}}</p>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="d-flex justify-content-between" style="color:black;margin:auto;width:10%;">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" class="btn other-page"><span style="z-index:3;position:relative;">FIRST</span></a>
+                <a href="?page={{page_obj.previous_page_number}}" class="btn other-page"><span style="z-index:3;position:relative;">{{page_obj.previous_page_number}}</span></a>
+                {% endif %}
+                <a class="btn current-page"><span style="z-index:3;position:relative;">{{page_obj.number}}</span></a>
+                {% if page_obj.has_next %}
+                <a href="?page={{page_obj.next_page_number}}" class="btn other-page"><span style="z-index:3;position:relative;">{{page_obj.next_page_number}}</span></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn other-page"><span style="z-index:3;position:relative;">LAST</span></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
